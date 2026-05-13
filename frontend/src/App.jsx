@@ -31,7 +31,7 @@ function App() {
     try {
 
       const response = await axios.get(
-        'http://localhost:5000/api/dashboard',
+        'https://team-task-manager-production-850d.up.railway.app/api/dashboard',
         {
           headers: {
             authorization: savedToken
@@ -61,8 +61,8 @@ function App() {
     try {
 
       const url = isLogin
-        ? 'http://localhost:5000/api/auth/login'
-        : 'http://localhost:5000/api/auth/signup'
+        ? 'https://team-task-manager-production-850d.up.railway.app/api/auth/login'
+        : 'https://team-task-manager-production-850d.up.railway.app/api/auth/signup'
 
       const response = await axios.post(url, formData)
 
