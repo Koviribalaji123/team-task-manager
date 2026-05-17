@@ -5,6 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 const router = express.Router()
 
 router.get('/', authMiddleware, async (req, res) => {
+
   try {
 
     const totalTasks = await Task.countDocuments()
@@ -26,15 +27,26 @@ router.get('/', authMiddleware, async (req, res) => {
       status: { $ne: 'Done' }
     })
 
+    const tasksPerUser = await Task.aggregate([
+      {
+        $group: {
+          _id: '$assignedTo',
+          totalTasks: { $sum: 1 }
+        }
+      }
+    ])
+
     res.json({
       totalTasks,
       todo,
       inProgress,
       done,
-      overdue
+      overdue,
+      tasksPerUser
     })
 
   } catch (error) {
+
     res.status(500).json({
       message: error.message
     })

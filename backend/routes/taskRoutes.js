@@ -5,6 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 const router = express.Router()
 
 router.post('/create', authMiddleware, async (req, res) => {
+
   try {
 
     const {
@@ -41,6 +42,7 @@ router.post('/create', authMiddleware, async (req, res) => {
 })
 
 router.get('/', authMiddleware, async (req, res) => {
+
   try {
 
     const tasks = await Task.find()
@@ -58,15 +60,30 @@ router.get('/', authMiddleware, async (req, res) => {
 })
 
 router.put('/:id', authMiddleware, async (req, res) => {
+
   try {
 
-    const task = await Task.findByIdAndUpdate(
+    const task = await Task.findById(req.params.id)
+
+    if (!task) {
+      return res.status(404).json({
+        message: 'Task not found'
+      })
+    }
+
+    if (task.assignedTo.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: 'Only assigned user can update task'
+      })
+    }
+
+    const updatedTask = await Task.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     )
 
-    res.json(task)
+    res.json(updatedTask)
 
   } catch (error) {
 
