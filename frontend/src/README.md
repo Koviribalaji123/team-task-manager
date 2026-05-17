@@ -32,7 +32,7 @@ Frontend:
 https://team-task-manager-16zy.vercel.app/
 
 Backend:
-https://team-task-manager-production-850d.up.railway.app/
+http://localhost:5000/
 ## Installation
 
 ### Backend

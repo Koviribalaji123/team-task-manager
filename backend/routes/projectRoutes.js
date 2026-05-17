@@ -1,5 +1,6 @@
 const express = require('express')
 const Project = require('../models/Project')
+const User = require('../models/User')
 const authMiddleware = require('../middleware/authMiddleware')
 
 const router = express.Router()
@@ -16,6 +17,11 @@ router.post('/create', authMiddleware, async (req, res) => {
       admin: req.user.id,
       members: [req.user.id]
     })
+
+    await User.findByIdAndUpdate(
+      req.user.id,
+      { role: 'Admin' }
+    )
 
     res.status(201).json({
       message: 'Project created',

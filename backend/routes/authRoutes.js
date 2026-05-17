@@ -12,7 +12,9 @@ router.get('/test', (req, res) => {
 })
 
 router.post('/signup', async (req, res) => {
+
   try {
+
     const { name, email, password } = req.body
 
     const existingUser = await User.findOne({ email })
@@ -37,15 +39,17 @@ router.post('/signup', async (req, res) => {
     })
 
   } catch (error) {
+
     res.status(500).json({
       message: error.message
     })
   }
 })
 
-module.exports = router 
 router.post('/login', async (req, res) => {
+
   try {
+
     const { email, password } = req.body
 
     const user = await User.findOne({ email })
@@ -56,7 +60,10 @@ router.post('/login', async (req, res) => {
       })
     }
 
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(
+      password,
+      user.password
+    )
 
     if (!isMatch) {
       return res.status(400).json({
@@ -77,12 +84,20 @@ router.post('/login', async (req, res) => {
     res.json({
       message: 'Login successful',
       token,
-      user
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
     })
 
   } catch (error) {
+
     res.status(500).json({
       message: error.message
     })
   }
 })
+
+module.exports = router
