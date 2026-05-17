@@ -66,7 +66,7 @@ function App() {
     try {
 
       const response = await axios.get(
-        'http://localhost:5000/api/dashboard',
+        'https://team-task-manager-production-850d.up.railway.app/api/dashboard',
         {
           headers: {
             authorization: savedToken
@@ -87,7 +87,7 @@ function App() {
     try {
 
       await axios.post(
-        'http://localhost:5000/api/tasks/create',
+        'https://team-task-manager-production-850d.up.railway.app/api/tasks/create',
         taskData,
         {
           headers: {
@@ -115,7 +115,7 @@ function App() {
     try {
 
       await axios.put(
-        `http://localhost:5000/api/projects/add-member/${projectId}`,
+        `https://team-task-manager-production-850d.up.railway.app/api/projects/add-member/${projectId}`,
         {
           userId: memberId
         },
@@ -156,8 +156,8 @@ function App() {
     try {
 
       const url = isLogin
-        ? 'http://localhost:5000/api/auth/login'
-        : 'http://localhost:5000/api/auth/signup'
+        ? 'https://team-task-manager-production-850d.up.railway.app/api/auth/login'
+        : 'https://team-task-manager-production-850d.up.railway.app/api/auth/signup'
 
       const response = await axios.post(url, formData)
 
